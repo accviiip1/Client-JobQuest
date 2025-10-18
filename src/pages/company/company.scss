@@ -1,0 +1,358 @@
+@use "../../scss/" as *;
+
+.company {
+  @include themify($themes) {
+    min-height: 100vh;
+    margin-top: $height-header;
+    .container {
+      .company__wrapper {
+        padding: 20px 0;
+        &__header {
+          @include flex(center, space-between);
+          gap: 20px;
+          @include mobile {
+            flex-direction: column;
+          }
+          h4 {
+            font-size: $font-size-m;
+            color: themed("text1");
+            font-weight: 600;
+          }
+          & > div {
+            @include flex(center, unset);
+            gap: 8px;
+            .button__filter {
+              padding: 12px;
+              background-color: themed("bg2");
+              border-radius: $border-radius-10;
+              color: themed("text1");
+              transition: all 0.3s;
+              margin-left: auto;
+              display: none;
+              @include mobile {
+                display: block;
+              }
+              &:hover {
+                opacity: 0.8;
+              }
+              i {
+                @include flex(center, center);
+                font-size: 1.2rem;
+                color: themed("text2");
+                --size: 36px;
+                width: var(--size);
+                height: var(--size);
+              }
+            }
+            .button__sort {
+              @include flex(center, unset);
+              gap: 8px;
+              position: relative;
+              .header {
+                font-size: $font-size-s;
+                color: themed("text2");
+                font-weight: 600;
+                padding: 12px;
+                background-color: themed("bg2");
+                border-radius: $border-radius-10;
+                cursor: pointer;
+                @include flex(center, unset);
+                i {
+                  --size: 36px;
+                  width: var(--size);
+                  height: var(--size);
+                  font-size: 1.2rem;
+                  @include flex(center, center);
+                }
+                &:hover {
+                  opacity: 0.8;
+                }
+              }
+              .dropdown {
+                position: absolute;
+                right: 0;
+                top: calc(100% + 8px);
+                overflow: hidden;
+                z-index: 99;
+                border-radius: $border-radius-10;
+                box-shadow: themed("box-shadow");
+                background-color: themed("bg2");
+                overflow: hidden;
+                .list {
+                  width: max-content;
+                  flex-direction: column;
+                  @include flex(start, unset);
+                  &__item {
+                    padding: 10px;
+                    font-size: $font-size-s;
+                    color: themed("text1");
+                    font-weight: 400;
+                    cursor: pointer;
+                    text-align: left;
+                    width: 100%;
+                    &.active {
+                      font-weight: 600;
+                    }
+                    &:hover {
+                      background-color: themed("bg1");
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        &__main {
+          margin-top: 20px;
+          &__list {
+            width: 100%;
+            min-height: 400px;
+            display: flex;
+            flex-wrap: wrap;
+            min-height: 800px;
+          }
+        }
+      }
+    }
+    &__modal__filter {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: themed("bg2");
+      z-index: 9999;
+      padding: 20px;
+      transform: translateY(100%);
+      transition: all 0.3s;
+      opacity: 0;
+      &.active {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      .button__close__filter {
+        width: 100%;
+        text-align: right;
+        padding: 10px;
+        i {
+          font-size: 1.8rem;
+        }
+      }
+    }
+  }
+}
+
+.company__inputSearch {
+  @include themify($themes) {
+    position: relative;
+    &__search {
+      background-color: themed("bg2");
+      padding: 8px 10px;
+      border-radius: $border-radius-10;
+      @include flex(center, unset);
+      width: 100%;
+      i {
+        font-size: $font-size-s;
+        color: themed("text1");
+      }
+      &__input {
+        position: relative;
+        input {
+          font-size: $font-size-s;
+          color: themed("text1");
+          height: 28px;
+          padding: 8px;
+          background-color: transparent;
+          width: 260px;
+          flex: 1;
+          @include mobile {
+            width: 100%;
+          }
+        }
+        & > .btn-clear {
+          position: absolute;
+          top: 50%;
+          right: 4px;
+          transform: translateY(-50%);
+          i {
+            color: themed("text2");
+            font-size: 1.1rem;
+          }
+        }
+      }
+
+      &>.btn-submit {
+        @include button($color-white, $color-primary);
+      }
+    }
+    &__history {
+      position: absolute;
+      top: calc(100% + 10px);
+      background-color: themed("bg2");
+      z-index: 99;
+      width: 100%;
+      border-radius: $border-radius-10;
+      overflow: hidden;
+      overflow: themed("overflow");
+      display: none;
+      box-shadow: themed("box-shadow");
+      &.active {
+        display: block;
+      }
+      ul {
+        li {
+          padding: 12px 18px;
+          @include flex(center, unset);
+          color: themed("text1");
+          gap: 8px;
+          transition: all 0.3s;
+          cursor: pointer;
+          &:hover {
+            background-color: themed("bg1");
+          }
+          span {
+            @include hideText(100%);
+            font-size: $font-size-s;
+          }
+        }
+      }
+    }
+  }
+}
+
+.company__wrapper__main__filter {
+  @include themify($themes) {
+    @include flex(start, unset);
+    flex-direction: column;
+    width: 100%;
+    input[type="checkbox"] {
+      appearance: none;
+      --webkit-appearance: none;
+      height: 22px;
+      width: 22px;
+      background-color: themed("bg2");
+      border-radius: 5px;
+      border: 2px solid themed("border");
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      &:hover {
+        border-color: $color-primary;
+      }
+      &::after {
+        font-family: "Font Awesome 6 Free";
+        content: "\f00c";
+        font-size: 20px;
+        color: $color-white;
+        font-weight: 999;
+        display: none;
+      }
+      &:checked {
+        border-color: $color-primary;
+        background-color: $color-primary;
+        &::after {
+          display: block;
+        }
+      }
+    }
+    &__address {
+      margin-top: 10px;
+      width: 100%;
+      &__header {
+        @include flex(center, space-between);
+        h6 {
+          font-size: $font-size-s;
+          color: themed("text1");
+          font-weight: 500;
+        }
+        button {
+          font-size: $font-size-s;
+          color: $color-txt-red;
+          font-weight: 400;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+      &__list {
+        width: 100%;
+        overflow: scroll;
+        padding: 10px 0;
+        height: 300px;
+        overflow: auto;
+        &::-webkit-scrollbar {
+          width: 6px;
+        }
+        /* Track */
+        &::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+          border-radius: 20px;
+          background: #888;
+        }
+
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+          background: #555;
+        }
+        &__item {
+          width: 100%;
+          @include flex(center, unset);
+          gap: 10px;
+          padding: 8px 0;
+          // cursor: pointer;
+          span,
+          label {
+            cursor: pointer;
+            font-size: $font-size-s;
+            color: themed("text1");
+            font-weight: 400;
+          }
+        }
+      }
+    }
+    &__scale {
+      margin-top: 10px;
+      height: 40vh;
+      width: 100%;
+      &__header {
+        @include flex(center, space-between);
+
+        h6 {
+          font-size: $font-size-s;
+          color: themed("text1");
+          font-weight: 500;
+        }
+        button {
+          font-size: $font-size-s;
+          color: $color-txt-red;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+      &__list {
+        width: 100%;
+        overflow: auto;
+        padding: 10px 0;
+        &__item {
+          width: 100%;
+          @include flex(center, unset);
+          gap: 10px;
+          padding: 8px 0;
+          label {
+            cursor: pointer;
+            font-size: $font-size-s;
+            color: themed("text1");
+            font-weight: 400;
+          }
+        }
+      }
+    }
+  }
+}

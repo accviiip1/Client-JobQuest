@@ -1,0 +1,60 @@
+@use "../../scss/" as *;
+
+.pagination {
+  @include themify($themes) {
+    width: 100%;
+    @include flex(center, center);
+    padding: 20px 0;
+    &__wrapper {
+      @include flex(center, unset);
+      button {
+        --size: 40px;
+        padding: 10px;
+        line-height: 1;
+        font-size: $font-size-s;
+        width: var(--size);
+        height: var(--size);
+        border-radius: $border-radius-10;
+        @include flex(center, center);
+        cursor: pointer;
+        color: themed("text1");
+        font-weight: 500;
+        border: 1px solid themed('border');
+        background-color: themed("bg3");
+        &:hover {
+          border: 1px solid $color-primary;
+          background-color: themed("bg2");
+        }
+      }
+      &__list {
+        @include flex(center, unset);
+        gap: 6px;
+        padding: 0 10px;
+        button {
+          &.active {
+            background-color: $color-primary;
+            color: $color-white;
+          }
+        }
+      }
+      &__btn__left {
+        &.hidden {
+          visibility: hidden;
+        }
+        button:hover {
+          background-color: themed("bg2");
+          color: themed("text1");
+        }
+      }
+      &__btn__right {
+        &.hidden {
+          visibility: hidden;
+        }
+        button:hover {
+          background-color: themed("bg2");
+          color: themed("text1");
+        }
+      }
+    }
+  }
+}

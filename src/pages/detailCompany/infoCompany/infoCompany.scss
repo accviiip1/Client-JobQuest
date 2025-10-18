@@ -1,0 +1,78 @@
+@use "../../../scss/" as *;
+
+.infoCompany {
+  @include themify($themes) {
+    &__wrapper {
+      padding: 18px;
+      border-radius: $border-radius-10;
+      background-color: themed('bg2');
+      &__header {
+      }
+      &__body {
+        &__item {
+          @include flex(center, space-between);
+          padding: 20px 0;
+          border-bottom: 1px solid themed("border");
+          &__left {
+            h6 {
+              font-size: $font-size-s;
+              color: themed("text1");
+              font-weight: 600;
+              margin-bottom: 10px;
+            }
+            span {
+              font-size: $font-size-s;
+              font-weight: 400;
+              color: themed("text1");
+            }
+            input {
+              font-size: $font-size-s;
+              font-weight: 400;
+              color: themed("text1");
+              padding: 16px 20px;
+              background-color: themed("bg1");
+              border-radius: $border-radius-10;
+              width: 280px;
+              @include mobile {
+                width: 100%;
+              }
+            }
+            .select {
+              width: 280px;
+              @include mobile {
+                width: 100%;
+              }
+            }
+          }
+          &__right {
+            @include flex(end, unset);
+            flex-direction: column;
+            gap: 10px;
+            min-width: 30%;
+            button {
+              background-color: themed("bg1");
+              padding: 10px 16px;
+              border-radius: $border-radius-10;
+              color: themed("text1");
+              font-size: $font-size-s;
+              cursor: pointer;
+              &.btn-edit {
+              }
+              &.btn-save {
+                background-color: $color-primary;
+                color: $color-white;
+              }
+              &.btn-cancel {
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.ItemInfoCompany {
+  @include themify($themes) {
+  }
+}

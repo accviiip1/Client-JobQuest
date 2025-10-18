@@ -1,0 +1,270 @@
+@use "../../scss/" as *;
+
+.dropdown {
+  @include themify($themes) {
+    position: relative;
+    @include mobile {
+      width: 100%;
+    }
+    .dropdown__toggle {
+      padding: 12px 20px;
+      background-color: themed("bg2");
+      border-radius: $border-radius-10;
+      border: 1px solid themed("border");
+      @include flex(center, unset);
+      cursor: pointer;
+      gap: 6px;
+      color: themed("text1");
+      transition: all 0.3s;
+      user-select: none;
+      z-index: 1;
+      @include mobile {
+        border-radius: $border-radius-10;
+        @include flex(center, space-between);
+      }
+      &.active {
+        background-color: $color-primary;
+        border-color: $color-primary;
+        color: $color-white;
+      }
+      &:hover {
+        background-color: themed("bg2");
+      }
+      &.active {
+        background-color: $color-primary;
+        color: $color-white;
+      }
+      &__title {
+        @include flex(center, unset);
+        gap: 8px;
+        span {
+          font-size: $font-size-s;
+        }
+        i:nth-child(1) {
+          font-size: $font-size-s;
+        }
+      }
+      .icon-down {
+        @include flex(center, center);
+        font-size: $font-size-s;
+        transition: all 0.3s;
+        &.open {
+          transform: rotate(-180deg);
+        }
+      }
+    }
+    .dropdown__menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      width: max-content;
+      min-width: 100%;
+      background-color: themed("bg2");
+      box-shadow: themed("box-shadow");
+      border-radius: $border-radius-10;
+      overflow: hidden;
+      display: block;
+      z-index: 99;
+      @include mobile{
+        width: 100%;
+      }
+      @include mobile {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      &__search {
+        width: 100%;
+        @include flex(center, unset);
+        background-color: themed("bg1");
+        padding: 8px;
+        position: relative;
+        i {
+          padding: 10px;
+          font-size: 1.1rem;
+          color: themed("text1");
+        }
+        input {
+          flex: 1;
+          font-size: $font-size-s;
+          color: themed("text1");
+          padding: 8px 0;
+        }
+        .btn-clear {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          right: 4px;
+          border-radius: 50%;
+          padding: 6px;
+          transition: all 0.3s;
+          &:hover {
+            background-color: themed("bg2");
+          }
+          i {
+            @include flex(center, center);
+            --size: 20px;
+            width: var(--size);
+            height: var(--size);
+            font-size: 1.1rem;
+            color: themed("text1");
+          }
+        }
+      }
+      &__list {
+        max-height: 340px;
+        height: max-content;
+        overflow-y: auto;
+        &__item {
+          label {
+            padding: 10px;
+            cursor: pointer;
+            @include flex(center, unset);
+            gap: 10px;
+            transition: all 0.3s;
+            &:hover {
+              background-color: themed("bg1");
+            }
+            input[type="checkbox"] {
+              appearance: none;
+              --webkit-appearance: none;
+              height: 22px;
+              width: 22px;
+              background-color: themed("bg2");
+              border-radius: 5px;
+              border: 2px solid themed("border");
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              transition: all 0.3s;
+              &:hover {
+                border-color: $color-primary;
+              }
+              &::after {
+                font-family: "Font Awesome 6 Free";
+                content: "\f00c";
+                font-size: 20px;
+                color: $color-white;
+                font-weight: 999;
+                display: none;
+              }
+              &:checked {
+                border-color: $color-primary;
+                background-color: $color-primary;
+                &::after {
+                  display: block;
+                }
+              }
+            }
+            span {
+              color: themed("text1");
+              font-size: $font-size-s;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.dropdown__menu__salary {
+  @include themify($themes) {
+    padding: 10px 20px;
+    @include flex(start, unset);
+    flex-direction: column;
+    gap: 15px;
+    h4 {
+      font-size: $font-size-s;
+      color: themed("text1");
+      margin-bottom: 5px;
+    }
+    &__inputs {
+      @include flex(start, center);
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      
+      .salary-input-group {
+        @include flex(start, center);
+        gap: 8px;
+        width: 100%;
+        
+        label {
+          font-size: $font-size-xs;
+          color: themed("text2");
+          min-width: 30px;
+          font-weight: 500;
+        }
+        
+        input[type="number"] {
+          flex: 1;
+          padding: 8px 12px;
+          border: 1px solid themed("border");
+          border-radius: 5px;
+          background-color: themed("bg1");
+          color: themed("text1");
+          font-size: $font-size-s;
+          transition: all 0.2s ease;
+          
+          &:focus {
+            outline: none;
+            border-color: $color-primary;
+            box-shadow: 0 0 0 2px rgba($color-primary, 0.1);
+          }
+          
+          &::-webkit-outer-spin-button,
+          &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+          
+          &[type=number] {
+            -moz-appearance: textfield;
+          }
+        }
+        
+        span {
+          font-size: $font-size-xs;
+          color: themed("text2");
+          min-width: 40px;
+        }
+      }
+    }
+
+    &__input {
+      @include flex(center, space-between);
+      gap: 12px;
+      display: none;
+      & > div {
+        background-color: themed("bg1");
+        padding: 6px 10px;
+        border-radius: $border-radius-20;
+        width: max-content;
+        input {
+          padding: 6px;
+          font-size: $font-size-s;
+          color: themed("text1");
+          width: 40px;
+        }
+        span {
+          color: themed("text2");
+        }
+      }
+      &__min {
+      }
+      &__max {
+      }
+    }
+    &__button {
+      @include flex(center, space-between);
+      gap: 4px;
+      width: 100%;
+      .btn-submit {
+        @include button($color-white, $color-primary);
+      }
+      .btn-remove {
+        @include button-line($color-txt-red, $color-white);
+      }
+    }
+  }
+}

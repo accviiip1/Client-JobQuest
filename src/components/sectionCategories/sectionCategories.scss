@@ -1,0 +1,92 @@
+@use "../../scss/" as *;
+
+
+.sectionCategories {
+  @include themify($themes) {
+    margin-top: $spacing;
+    &__header {
+      margin: 20px 0;
+      @include flex(center, unset);
+      gap: 10px;
+      h4 {
+        color: themed("text1");
+        font-size: $font-size-l;
+      }
+      &__link {
+        color: themed("primary");
+        border-left: 1px solid #ccc;
+        padding: 0 10px;
+        span {
+          font-size: $font-size-s;
+        }
+        i {
+          transition: all 0.3s;
+        }
+        &:hover {
+          i {
+            transform: translateX(8px);
+          }
+        }
+      }
+    }
+    &__body {
+      &__list {
+        margin-right: -10px;
+        margin-left: -10px;
+        padding: 0;
+        &__item {
+          @include flex(center, center);
+          padding: 10px;
+          &__box {
+            background-color: themed("bg2");
+            border-radius: $border-radius-10;
+            //  border-bottom-right-radius: 40px;
+            padding: 20px;
+            // min-height: 200px;
+            height: 100%;
+            height: 200px;
+            transition: all 0.3s;
+            cursor: pointer;
+            @include flex(start, space-between);
+            gap: 8px;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            &:hover {
+              scale: 1.02;
+              box-shadow: themed("box-shadow");
+            }
+            &__image {
+              @include flex(center, center);
+              width: 90px;
+              height: 90px;
+              img {
+                filter: brightness(0) invert(60%);
+                // filter: contrast(175%) brightness(103%);
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                @include mobile {
+                  filter: brightness(0) invert(60%);
+                }
+              }
+            }
+
+            &__text {
+              h4 {
+                font-size: $font-size-m;
+                color: themed("text1");
+                font-weight: 500;
+              }
+              span {
+                font-size: $font-size-s;
+                color: themed("text2");
+                text-decoration: underline;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

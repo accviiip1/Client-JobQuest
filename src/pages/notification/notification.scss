@@ -1,0 +1,261 @@
+@import "../../scss/index.scss";
+
+.notification-page {
+  @include themify($themes) {
+    min-height: 100vh;
+    background-color: themed("bg");
+    padding: 20px 0;
+    margin-top: $height-header; // Thêm margin-top để tránh bị che bởi header
+
+    &__wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+        &__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      padding: 20px;
+      background-color: themed("bg2");
+      border-radius: $border-radius-10;
+      box-shadow: themed("box-shadow");
+
+      &-left {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      &-right {
+        display: flex;
+        align-items: center;
+      }
+
+      .btn-back {
+        display: flex;
+        align-items: center;
+          gap: 8px;
+        padding: 10px 15px;
+        background-color: themed("bg");
+        border: 1px solid themed("border");
+        border-radius: $border-radius-10;
+            color: themed("text1");
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+            &:hover {
+              background-color: themed("bg1");
+            }
+
+        i {
+          font-size: 14px;
+        }
+      }
+
+              h2 {
+          color: themed("text1");
+          font-size: 24px;
+          font-weight: 600;
+          margin: 0;
+        }
+
+        .btn-mark-all-read {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 15px;
+          background-color: themed("primary");
+          color: white;
+          border: none;
+          border-radius: $border-radius-10;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          font-size: 14px;
+
+          &:hover:not(:disabled) {
+            background-color: themed("primaryDark");
+          }
+
+          &:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+          }
+
+          i {
+            font-size: 14px;
+          }
+        }
+    }
+
+    &__body {
+                    background-color: themed("bg2");
+                    border-radius: $border-radius-10;
+                    box-shadow: themed("box-shadow");
+                    overflow: hidden;
+
+      .loading {
+        padding: 40px;
+        text-align: center;
+        color: themed("text2");
+        font-size: 16px;
+      }
+
+      .empty-state {
+        padding: 60px 20px;
+        text-align: center;
+        color: themed("text2");
+
+        i {
+          font-size: 48px;
+          margin-bottom: 16px;
+          opacity: 0.5;
+        }
+
+        p {
+          font-size: 16px;
+          margin: 0;
+        }
+      }
+
+      .notification-list {
+        .notification-item {
+          display: flex;
+          align-items: flex-start;
+          padding: 20px;
+          border-bottom: 1px solid themed("border");
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          position: relative;
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+                  &:hover {
+                    background-color: themed("bg1");
+                  }
+
+          // Thông báo chưa đọc
+          &.unread {
+            background-color: rgba(59, 130, 246, 0.08);
+            border-left: 4px solid #3b82f6;
+
+                    &:hover {
+              background-color: rgba(59, 130, 246, 0.12);
+                    }
+
+            // Chấm đỏ cho thông báo chưa đọc
+                    &::after {
+              content: '';
+              position: absolute;
+              top: 20px;
+              right: 20px;
+              width: 10px;
+              height: 10px;
+              background-color: #ef4444;
+              border-radius: 50%;
+              border: 2px solid themed("bg2");
+              transition: all 0.3s ease;
+            }
+          }
+
+          // Thông báo đã đọc
+          &:not(.unread) {
+            background-color: themed("bg2");
+            border-left: 4px solid transparent;
+          }
+
+          // Trạng thái đang đánh dấu đã đọc
+          &.marking {
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+          }
+
+          // Thông báo mới
+          &.new-notification {
+            animation: newNotificationPulse 2s ease-in-out;
+            border-left: 4px solid #10b981;
+            background-color: rgba(16, 185, 129, 0.05);
+          }
+
+          .notification-content {
+            flex: 1;
+
+            .notification-message {
+              color: themed("text1");
+              font-size: 14px;
+              line-height: 1.5;
+              margin-bottom: 8px;
+
+              b {
+                font-weight: 600;
+                color: #3b82f6;
+              }
+            }
+
+            .notification-time {
+              color: themed("text2");
+              font-size: 12px;
+              margin-top: 4px;
+              opacity: 0.8;
+            }
+          }
+
+          .unread-indicator {
+            display: none; // Ẩn indicator cũ vì đã có chấm đỏ mới
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animation cho thông báo mới
+@keyframes newNotificationPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+// Responsive
+    @include mobile {
+  .notification-page {
+    padding: 10px;
+
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+
+      h2 {
+        font-size: 20px;
+      }
+    }
+
+    &__body {
+      .notification-list {
+        .notification-item {
+          padding: 15px;
+
+          .notification-content {
+            .notification-message {
+              font-size: 13px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

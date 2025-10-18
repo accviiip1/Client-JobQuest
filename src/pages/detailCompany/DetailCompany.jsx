@@ -1,0 +1,494 @@
+import React, { useEffect, useState, useRef } from "react";
+import "./detailCompany.scss";
+
+import avatar from "../../assets/images/avatarCpn.png";
+import bg from "../../assets/images/gradient1.jpg";
+
+import InfoCompany from "./infoCompany/InfoCompany";
+import IntroCompany from "./introCompany/IntroCompany";
+import JobsCompany from "./jobsCompany/JobsCompany";
+
+import ModalAvatar from "../../components/modalAvatar/ModalAvatar";
+import NotFound from "../../pages/notFound/NotFound";
+import Loader from "../../components/loader/Loader";
+import ModalCropImage from "../../components/modalCropImage/ModalCropImage";
+import RecomKeyword from "../../components/recomKeyword/RecomKeyword";
+import MessageButton from "../../components/chat/MessageButton";
+
+import { useAuth } from "../../context/authContext";
+import { makeRequest, apiImage } from "../../axios";
+import { Link, useParams, Route, Routes, useNavigate, useLocation } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+
+import {
+  FacebookShareButton,
+  EmailShareButton,
+  TwitterShareButton,
+  FacebookIcon,
+  EmailIcon,
+  TwitterIcon,
+} from "react-share";
+import { toast } from "sonner";
+
+export default function DetailCompany() {
+  const [err, setErr] = useState();
+  const [loading, setLoading] = useState();
+  const [company, setCompany] = useState();
+  const [follower, setFollower] = useState();
+  const [openControlMb, setOpenControlMb] = useState(false);
+  const [openModalEditAvatar, setOpenModalEditAvatar] = useState(false);
+  const [openModalAvatar, setOpenModalAvatar] = useState(false);
+  const { currentCompany, currentUser } = useAuth();
+  const controlMbRef = useRef();
+  const modalAvatarRef = useRef();
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const queryClient = useQueryClient();
+  const urlShare = window.location.href;
+
+  const controlPathname = pathname.split("/").filter(Boolean).pop();
+
+  const getCompany = async () => {
+    setLoading(true);
+    try {
+      const res = await makeRequest.get("/company/" + id);
+      setCompany(res.data);
+      setLoading(false);
+    } catch (error) {
+      setErr("id không đúng");
+    }
+    setLoading(false);
+  };
+
+  const getFollower = async () => {
+    try {
+      const res = await makeRequest("follow/follower?idCompany=" + id);
+      setFollower(res.data);
+    } catch (error) {}
+  };
+
+  const { isLoading, error, data } = useQuery(["company"], () => {
+    return getCompany();
+  });
+
+  const { isLoading: loadingFollow, data: dataFollow } = useQuery(["follower", id], () => {
+    return getFollower();
+  });
+
+  const mutationFollow = useMutation(
+    (following) => {
+      if (following) return makeRequest.delete("/follow?idCompany=" + id);
+      return makeRequest.post("/follow?idCompany=" + id);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["follower"]);
+      },
+    }
+  );
+
+  const handleSubmitFollow = () => {
+    if (!currentUser) return navigate("/dang-nhap/nguoi-dung");
+    mutationFollow.mutate(follower?.includes(currentUser?.id));
+
+    follower?.includes(currentUser?.id)
+      ? toast.success("Đã bỏ yêu thích công ty.")
+      : toast.success("Đã thêm vào công ty yêu thích.");
+  };
+
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
+
+  useEffect(() => {
+    const handleMousedown = (e) => {
+      if (!controlMbRef.current?.contains(e.target)) {
+        setOpenControlMb(false);
+      }
+    };
+    document.addEventListener("mousedown", handleMousedown);
+    return () => document.removeEventListener("mousedown", handleMousedown);
+  });
+
+  useEffect(() => {
+    setOpenControlMb(false);
+  }, [controlPathname]);
+
+  return (
+    <div>
+      <div className="detailCompany">
+        <div className="container">
+          {loading ? (
+            <Loader />
+          ) : company ? (
+            <div className="detailCompany__wrapper">
+              <div className="detailCompany__wrapper__header">
+                <div className="detailCompany__wrapper__header__bg">
+                  <img className="image-loading" src={bg} alt="" />
+                </div>
+                <div className="detailCompany__wrapper__header__main">
+                  <div className="detailCompany__wrapper__header__main__left">
+                    <div className="detailCompany__wrapper__header__main__left__image">
+                      <img
+                        className="image-loading"
+                        onClick={() => setOpenModalAvatar(true)}
+                        src={company?.avatarPic ? apiImage + company?.avatarPic : avatar}
+                        onError={(e) => (e.target.src = avatar)}
+                        alt=""
+                      />
+                      {company?.id === currentCompany?.id && (
+                        <button
+                          onClick={() => setOpenModalEditAvatar(true)}
+                          className="detailCompany__wrapper__header__main__left__image__edit"
+                        >
+                          <i className="fa-solid fa-camera"></i>
+                        </button>
+                      )}
+                    </div>
+                    <div className="detailCompany__wrapper__header__main__left__text">
+                      <span className="tag">Nhà tuyển dụng</span>
+                      <h4 className="name-company">
+                        {company?.nameCompany ? company?.nameCompany : "..."}
+                      </h4>
+                      <div className="desc-company">
+                        <div className="scale">
+                          <i className="fa-solid fa-building"></i>
+                          <span>{company?.scale ? `${company?.scale} nhân viên` : "..."}</span>
+                        </div>
+                        <div className="follow">
+                          <i className="fa-solid fa-user-group"></i>
+                          <span>{follower ? follower?.length : "0"} người theo dõi</span>
+                        </div>
+                        <div className="link">
+                          <i className="fa-solid fa-globe"></i>
+                          {company?.web ? <a href={company.web}>{company.web}</a> : "..."}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div 
+                    className="detailCompany__wrapper__header__main__actions"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '16px',
+                      flexWrap: 'wrap',
+                      justifyContent: 'flex-start',
+                      '@media (max-width: 768px)': {
+                        flexDirection: 'row',
+                        gap: '12px',
+                        width: '100%',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                      },
+                      '@media (max-width: 480px)': {
+                        flexDirection: 'column',
+                        gap: '12px',
+                        width: '100%',
+                        alignItems: 'stretch'
+                      }
+                    }}
+                  >
+                    {company?.id !== currentCompany?.id && (
+                      <>
+                        <div 
+                          className="button__follow" 
+                          onClick={() => handleSubmitFollow()}
+                          style={{
+                            width: 'auto',
+                            minWidth: '140px',
+                            '@media (max-width: 768px)': {
+                              width: 'auto',
+                              minWidth: '120px'
+                            },
+                            '@media (max-width: 480px)': {
+                              width: '100%',
+                              minWidth: 'unset'
+                            }
+                          }}
+                        >
+                          {!loadingFollow ? (
+                            follower?.includes(currentUser?.id) ? (
+                              <button 
+                                className="btn-unFollow"
+                                style={{
+                                  padding: '12px 24px',
+                                  backgroundColor: '#f8f9fa',
+                                  color: '#333',
+                                  border: '1px solid #ddd',
+                                  borderRadius: '10px',
+                                  cursor: 'pointer',
+                                  fontSize: '15px',
+                                  fontWeight: '600',
+                                  transition: 'all 0.3s ease',
+                                  minWidth: '140px',
+                                  height: '44px',
+                                  width: 'auto',
+                                  '@media (max-width: 768px)': {
+                                    width: 'auto',
+                                    minWidth: '120px',
+                                    height: '44px',
+                                    fontSize: '14px',
+                                    padding: '10px 20px'
+                                  },
+                                  '@media (max-width: 480px)': {
+                                    width: '100%',
+                                    minWidth: 'unset',
+                                    height: '48px',
+                                    fontSize: '16px',
+                                    padding: '14px 28px'
+                                  }
+                                }}
+                                onMouseEnter={(e) => {
+                                  e.target.style.backgroundColor = '#f44336';
+                                  e.target.style.color = 'white';
+                                  e.target.style.borderColor = '#f44336';
+                                  e.target.style.transform = 'translateY(-1px)';
+                                  const span = e.target.querySelector('span');
+                                  if (span) span.textContent = 'Bỏ theo dõi';
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.target.style.backgroundColor = '#f8f9fa';
+                                  e.target.style.color = '#333';
+                                  e.target.style.borderColor = '#ddd';
+                                  e.target.style.transform = 'translateY(0)';
+                                  const span = e.target.querySelector('span');
+                                  if (span) span.textContent = 'Đang theo dõi';
+                                }}
+                              >
+                                <span>Đang theo dõi</span>
+                              </button>
+                            ) : (
+                              <button 
+                                className="btn-follow"
+                                style={{
+                                  padding: '12px 24px',
+                                  backgroundColor: '#667eea',
+                                  color: 'white',
+                                  border: 'none',
+                                  borderRadius: '10px',
+                                  cursor: 'pointer',
+                                  fontSize: '15px',
+                                  fontWeight: '600',
+                                  transition: 'all 0.3s ease',
+                                  minWidth: '140px',
+                                  height: '44px',
+                                  boxShadow: '0 3px 10px rgba(102, 126, 234, 0.3)',
+                                  width: 'auto',
+                                  '@media (max-width: 768px)': {
+                                    width: 'auto',
+                                    minWidth: '120px',
+                                    height: '44px',
+                                    fontSize: '14px',
+                                    padding: '10px 20px'
+                                  },
+                                  '@media (max-width: 480px)': {
+                                    width: '100%',
+                                    minWidth: 'unset',
+                                    height: '48px',
+                                    fontSize: '16px',
+                                    padding: '14px 28px'
+                                  }
+                                }}
+                                onMouseEnter={(e) => {
+                                  e.target.style.transform = 'translateY(-1px)';
+                                  e.target.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.4)';
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.target.style.transform = 'translateY(0)';
+                                  e.target.style.boxShadow = '0 2px 8px rgba(102, 126, 234, 0.3)';
+                                }}
+                              >
+                                <span>Theo dõi công ty</span>
+                              </button>
+                            )
+                          ) : (
+                            <button className="btn-loading">
+                              <div className="loading"></div>
+                            </button>
+                          )}
+                        </div>
+                        <div style={{
+                          marginLeft: '16px',
+                          '@media (max-width: 768px)': {
+                            marginLeft: '12px'
+                          },
+                          '@media (max-width: 480px)': {
+                            marginLeft: '0px',
+                            marginTop: '12px',
+                            alignSelf: 'center'
+                          }
+                        }}>
+                          <div style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            width: '48px',
+                            height: '48px',
+                            '@media (max-width: 768px)': {
+                              width: '44px',
+                              height: '44px'
+                            },
+                            '@media (max-width: 480px)': {
+                              width: '40px',
+                              height: '40px'
+                            }
+                          }}>
+                            <MessageButton
+                              otherUser={{
+                                id: company?.id,
+                                name: company?.nameCompany,
+                                avatar: company?.avatarPic ? apiImage + company?.avatarPic : avatar
+                              }}
+                              otherType="company"
+                              otherId={company?.id}
+                              className="message-button--profile"
+                            />
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="detailCompany__wrapper__body row">
+                <div className=" col pc-9 t-8 m-12">
+                  <div className="detailCompany__wrapper__body__left">
+                    {company?.id === currentCompany?.id && (
+                      <>
+                        <div className="detailCompany__wrapper__body__left__control">
+                          <button
+                            onClick={() => navigate("")}
+                            className={`${controlPathname === id && "active"}`}
+                          >
+                            <span>Giới thiệu</span>
+                          </button>
+                          {company?.id === currentCompany?.id && (
+                            <>
+                              <button
+                                onClick={() => navigate("info")}
+                                className={`${controlPathname === "info" && "active"}`}
+                              >
+                                <span>Thông tin</span>
+                              </button>
+                              <Link to={"/nha-tuyen-dung/ung-vien"}>
+                                <button>
+                                  <span>Ứng viên</span>
+                                </button>
+                              </Link>
+                              <Link to={"/nha-tuyen-dung/dang-bai"}>
+                                <button>Tuyển dụng</button>
+                              </Link>
+                            </>
+                          )}
+                        </div>
+
+                        <div className="detailCompany__wrapper__body__left__control-mobile">
+                          <button
+                            onClick={() => navigate("")}
+                            className={`${controlPathname === id && "active"}`}
+                          >
+                            <span>Giới thiệu</span>
+                          </button>
+
+                          {company?.id === currentCompany?.id && (
+                            <div className="button__more" ref={controlMbRef}>
+                              <button
+                                className="button__more__toggle"
+                                onClick={() => setOpenControlMb(!openControlMb)}
+                              >
+                                <span>Thêm</span>
+                                <i className="fa-solid fa-angle-down"></i>
+                              </button>
+                              {openControlMb && (
+                                <div className="button__more__dropdown">
+                                  <button
+                                    onClick={() => navigate("info")}
+                                    className={`${controlPathname === "info" && "active"}`}
+                                  >
+                                    <span>Thông tin</span>
+                                  </button>
+                                  <Link to={"/nha-tuyen-dung/ung-vien"}>
+                                    <button>
+                                      <span>Ứng viên</span>
+                                    </button>
+                                  </Link>
+                                  <Link to={"/nha-tuyen-dung/dang-bai"}>
+                                    <button>Tuyển dụng</button>
+                                  </Link>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </>
+                    )}
+
+                    <div className="detailCompany__wrapper__body__left__content">
+                      <Routes>
+                        <Route
+                          index
+                          element={
+                            <>
+                              <IntroCompany intro={company?.intro} />
+                              <JobsCompany />
+                            </>
+                          }
+                        />
+                        <Route
+                          path="jobs"
+                          element={
+                            <>
+                              <IntroCompany intro={company?.intro} />
+                              <JobsCompany />
+                            </>
+                          }
+                        />
+                        <Route path="info" element={<InfoCompany />} />
+                      </Routes>
+                    </div>
+                  </div>
+                </div>
+                <div className="col pc-3 t-4 m-12">
+                  <div className="detailCompany__wrapper__body__right">
+                    <h6>Địa chỉ</h6>
+                    <div className="province">
+                      <i className="fa-solid fa-location-dot"></i>
+                      {company?.province ? (
+                        <span href="">{company?.province}</span>
+                      ) : (
+                        <span>Không có</span>
+                      )}
+                    </div>
+                    <h6>Chia sẻ</h6>
+                    <div className="detailCompany__wrapper__body__right__list">
+                      <FacebookShareButton url={urlShare}>
+                        <FacebookIcon size={32} round />
+                      </FacebookShareButton>
+                      <EmailShareButton url={urlShare}>
+                        <EmailIcon size={32} round />
+                      </EmailShareButton>
+                      <TwitterShareButton url={urlShare}>
+                        <TwitterIcon size={32} round />
+                      </TwitterShareButton>
+                    </div>
+                  </div>
+                  <RecomKeyword />
+                </div>
+              </div>
+            </div>
+          ) : (
+            <NotFound />
+          )}
+        </div>
+      </div>
+      <ModalCropImage openModal={openModalEditAvatar} setOpenModal={setOpenModalEditAvatar} />
+      <ModalAvatar
+        openModal={openModalAvatar}
+        setOpenModal={setOpenModalAvatar}
+        avatarPic={company?.avatarPic ? apiImage + company?.avatarPic : avatar}
+      />
+    </div>
+  );
+}

@@ -1,0 +1,120 @@
+@use "../../scss/" as *;
+
+.detailCandidate {
+  @include themify($themes) {
+    width: 60vw;
+    @include tablet {
+      width: 90vw;
+    }
+    @include mobile {
+      width: 100%;
+      height: 100%;
+    }
+    &__wrapper {
+      padding: 20px 20px;
+      overflow-y: auto;
+      height: 500px;
+      width: 100%;
+      @include mobile {
+        width: 100%;
+        height: 100%;
+      }
+      &__control {
+        display: grid;
+        grid-template-columns: 0.6fr 1.4fr;
+        gap: 8px;
+        align-items: center;
+        &__title {
+          font-size: $font-size-m;
+          color: $color-primary;
+          padding: 8px;
+        }
+        &__select {
+          width: 200px;
+        }
+      }
+      &__group {
+        &__title {
+          width: 100%;
+          padding: 8px;
+          color: $color-primary;
+          font-size: $font-size-m;
+        }
+        &__content {
+          margin-left: 10px;
+          span {
+            color: themed("text2");
+            font-size: $font-size-s;
+          }
+          &__item {
+            display: grid;
+            grid-template-columns: 0.6fr 1.4fr;
+            margin-bottom: 6px;
+            h6 {
+              font-size: $font-size-s;
+              font-weight: 500;
+              color: themed("text1");
+            }
+            span {
+              font-size: $font-size-s;
+              font-weight: 400;
+              color: themed("text1");
+            }
+            a:hover {
+              span {
+                color: $color-txt-blue;
+              }
+            }
+          }
+          &__item__letters {
+            background-color: themed("bg1");
+            padding: 20px;
+            border-radius: $border-radius-10;
+            color: themed("text1");
+            font-size: $font-size-s;
+          }
+          &__item__cv {
+            padding: 8px;
+            a {
+              font-size: $font-size-s;
+              color: $color-txt-blue;
+              transition: all 0.3s;
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+          }
+          & > .file {
+            padding: 10px;
+            border-radius: $border-radius-10;
+            border: 1px solid $color-primary;
+            @include flex(center, space-between);
+            flex-wrap: wrap;
+            gap: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            .file__name {
+              @include flex(center, unset);
+              gap: 8px;
+              & > a {
+                color: themed("text1");
+                @include hideText(100%);
+              }
+              i {
+                color: themed("text1");
+                font-size: 1.4rem;
+              }
+            }
+            .file__button {
+              @include button(themed("text1"), themed("bg1"));
+              i {
+                font-size: 1.3rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

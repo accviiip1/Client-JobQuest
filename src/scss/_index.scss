@@ -1,0 +1,181 @@
+@forward "./variables";
+@forward "./mixin";
+@forward "./breakpoint";
+@forward "./grid";
+
+@use "./variables" as *;
+@use "./mixin" as *;
+@use "./breakpoint" as *;
+@use "./grid" as *;
+
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  @include tablet {
+    width: 100%;
+    padding: 0 20px;
+  }
+  @include mobile {
+    width: 100%;
+    padding: 0 20px;
+  }
+}
+
+.err {
+  font-size: $font-size-s;
+  background-color: $color-red;
+  color: $color-txt-red;
+  border-radius: $border-radius-10;
+  margin-bottom: 20px;
+  padding: 10px;
+  font-weight: 700;
+ // width: max-content;
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  flex-wrap: wrap;
+  @include flex(center, center);
+}
+
+.mess {
+  font-size: $font-size-s;
+  background-color: $color-green;
+  color: $color-txt-green;
+  border-radius: $border-radius-10;
+  margin-bottom: 20px;
+  padding: 10px;
+  font-weight: 700;
+}
+
+button,
+input,
+textarea,
+select {
+  outline: unset;
+  border: unset;
+  background-color: unset;
+  cursor: pointer;
+}
+
+a {
+  color: unset;
+  text-decoration: unset;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.btn-loading {
+  width: 100%;
+  height: 100%;
+  @include flex(center, center);
+  &>.loading {
+    --size: 38px;
+    width: var(--size);
+    height: var(--size);
+    border: 4px solid #ccc;
+    border-bottom-color: $color-white;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+}
+
+.loading {
+  --size: 38px;
+  width: var(--size);
+  height: var(--size);
+  border: 4px solid #ccc;
+  border-bottom-color: $color-white;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+.icon-loading {
+  width: 100%;
+  height: 100%;
+  @include flex(center, center);
+  &>.loading {
+    --size: 19px;
+    width: var(--size);
+    height: var(--size);
+    border: 2px solid #ccc;
+    border-bottom-color: $color-white;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+}
+
+.image-loading {
+  animation: skeleton-loading 0.8s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: rgba($color: #a3b8c2, $alpha: 0.6) ;
+  }
+
+  100% {
+    background-color: rgba($color: #f0f3f5, $alpha: 0.6) ;
+  }
+}
+
+.status-1 {
+  background-color: $color-blue;
+  color: $color-txt-blue;
+}
+.status-2 {
+  background-color: $color-yellow;
+  color: $color-txt-yellow;
+}
+.status-3 {
+  background-color: $color-orange;
+  color: $color-txt-orange;
+}
+.status-4 {
+  background-color: $color-red;
+  color: $color-txt-red;
+}
+.status-5 {
+  background-color: $color-green;
+  color: $color-txt-green;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loading {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(-70px, 0) rotate(-180deg);
+  }
+  50% {
+    transform: translate(0, 0) rotate(360deg);
+  }
+  75% {
+    transform: translate(70px, 0) rotate(180deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}

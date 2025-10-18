@@ -1,0 +1,138 @@
+@use '../../scss/' as *;
+
+.candidateHide {
+  @include themify($themes) {
+    margin-top: $height-header;
+    padding: $spacing 0;
+    min-height: 100vh;
+    .container {
+      .candidateHide__wrapper {
+        background-color: themed("bg2");
+        border-radius: $border-radius-20;
+        padding: 20px;
+        &__header {
+          margin-bottom: 20px;
+          @include flex(center, space-between);
+          gap: 8px;
+          & > a .btn-cancel {
+            font-size: $font-size-s;
+            color: themed("text1");
+            @include flex(center, unset);
+            gap: 8px;
+            padding: 12px 16px;
+            border-radius: $border-radius-10;
+            i {
+              transform: translateY(1px);
+              font-size: 1.2rem;
+              transition: all 0.3s;
+            }
+            &:hover {
+              background-color: themed("bg1");
+            }
+            span {
+              @include mobile {
+                display: none;
+              }
+            }
+          }
+          h2 {
+            color: $color-primary;
+            font-size: $font-size-l;
+            text-align: center;
+          }
+          & > a .btn-hidden {
+            @include button($color-white, $color-primary);
+            span {
+              @include mobile {
+                display: none;
+              }
+            }
+          }
+        }
+        &__body {
+          &__list {
+            width: 100%;
+            &__control {
+              margin-bottom: 20px;
+              @include flex(center, unset);
+              flex-wrap: wrap;
+              gap: 8px;
+              & > .button__checkAll {
+                @include button(themed("text1"), themed("bg1"));
+                label {
+                  cursor: pointer;
+                  @include flex(center, unset);
+                  gap: 10px;
+                  transition: all 0.3s;
+                  width: max-content;
+                  &:hover {
+                    background-color: themed("bg1");
+                  }
+                  input[type="checkbox"] {
+                    appearance: none;
+                    --webkit-appearance: none;
+                    height: 22px;
+                    width: 22px;
+                    background-color: themed("bg2");
+                    border-radius: 5px;
+                    border: 2px solid themed("border");
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: all 0.3s;
+                    &:hover {
+                      border-color: $color-primary;
+                    }
+                    &::after {
+                      font-family: "Font Awesome 6 Free";
+                      content: "\f00c";
+                      font-size: 20px;
+                      color: $color-white;
+                      font-weight: 999;
+                      display: none;
+                    }
+                    &:checked {
+                      border-color: $color-primary;
+                      background-color: $color-primary;
+                      &::after {
+                        display: block;
+                      }
+                    }
+                  }
+                }
+              }
+              & > .button__delete {
+                @include button(themed("text1"), themed("bg1"));
+              }
+              & > a .button__send {
+                @include button(themed("text1"), themed("bg1"));
+              }
+              & > .button__down {
+                @include button(themed("text1"), themed("bg1"));
+              }
+            }
+          }
+          &__pgn {
+            @include flex(center, space-between);
+            @include mobile {
+              justify-content: center;
+            }
+            &__left {
+              @include mobile {
+                display: none;
+              }
+              span {
+                font-size: $font-size-s;
+                font-weight: 500;
+                color: themed("text2");
+              }
+            }
+            &__right {
+            }
+          }
+        }
+      }
+    }
+  }
+}

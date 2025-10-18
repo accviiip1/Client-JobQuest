@@ -1,0 +1,354 @@
+@use "../../scss/" as *;
+
+.detailJob {
+  @include themify($themes) {
+    margin-top: $height-header;
+    .container {
+      position: relative;
+      .detailJob__share {
+        position: sticky;
+        top: $height-header;
+        right: 20px;
+        height: 0;
+
+        &__wrapper {
+          position: absolute;
+          top: 50px;
+          left: -60px;
+          height: 0;
+          &__list {
+            gap: 8px;
+            box-shadow: themed("box-shadow");
+            @include flex(center, unset);
+            flex-direction: column;
+            padding: 8px 6px;
+            background-color: themed("bg2");
+            border-radius: $border-radius-20;
+            width: max-content;
+            // border: 1px solid themed("border");
+            &__item {
+              transition: all 0.3s;
+              position: relative;
+              &:hover {
+                &::after,
+                &::before {
+                  --scale: 1;
+                }
+              }
+
+              &::after,
+              &::before {
+                --arrow-size: 6px;
+                --scale: 0;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%) translateY(var(--translate-y, 0)) scale(var(--scale));
+                transform-origin: bottom center;
+                transition: all 0.3s;
+                opacity: 0.8;
+              }
+
+              &::before {
+                --translate-y: calc(-100% - var(--arrow-size));
+                background-color: $color-black;
+                content: attr(data-tooltip);
+                color: $color-white;
+                font-size: 12px;
+                padding: 8px;
+                border-radius: $border-radius-10;
+                text-align: center;
+                width: max-content;
+                max-width: 64px;
+              }
+
+              &::after {
+                --translate-y: calc(-1 * var(--arrow-size));
+                content: "";
+                transform-origin: top center;
+                border: var(--arrow-size) solid transparent;
+                border-top-color: $color-black;
+              }
+            }
+          }
+        }
+      }
+      .detailJob__wrapper {
+        // padding: $spacing 0;
+        flex-wrap: wrap;
+
+        &__main {
+          background-color: themed("bg2");
+          border-radius: $border-radius-10;
+          //    overflow: hidden;
+          &__image {
+            padding: 20px;
+            width: 100%;
+            @include flex(end, unset);
+            gap: 20px;
+            img {
+              --size: 100px;
+              width: var(--size);
+              height: var(--size);
+              object-fit: cover;
+              box-shadow: themed("box-shadow");
+              border-radius: $border-radius-10;
+            }
+            &__name {
+              h4 {
+                font-size: $font-size-m;
+                color: themed("text1");
+              }
+              span {
+                font-size: $font-size-s;
+                color: $color-txt-blue;
+                transition: all 0.3s;
+                cursor: pointer;
+                &:hover {
+                  text-decoration: underline;
+                }
+              }
+            }
+          }
+          &__button {
+            @include flex(center, space-between);
+            padding: 20px;
+            &__user {
+              @include flex(center, unset);
+              gap: 10px;
+              .btn_applied {
+                border-radius: $border-radius-10;
+                padding: 12px 18px;
+                font-weight: 500;
+                font-size: $font-size-s;
+                background-color: $color-green;
+                color: $color-txt-green;
+                @include flex(center, unset);
+                gap: 8px;
+              }
+              .btn_apply {
+                @include button($color-white, $color-primary);
+              }
+              .btn_stops {
+                border-radius: $border-radius-10;
+                padding: 12px 18px;
+                font-weight: 500;
+                font-size: $font-size-s;
+                background-color: $color-red;
+                color: $color-txt-red;
+                @include flex(center, unset);
+                gap: 8px;
+              }
+              .btn_save {
+                @include button-line($color-txt-red, $color-white);
+                display: flex;
+                gap: 8px;
+              }
+            }
+            &__company {
+              .button__more {
+                font-size: $font-size-s;
+                position: relative;
+                & > button {
+                  font-size: $font-size-s;
+                  @include flex(center, center);
+                  padding: 10px;
+                  border-radius: 50%;
+                  transition: all 0.3s;
+                  &:hover {
+                    background-color: themed("bg1");
+                  }
+                  i {
+                    color: themed("text2");
+                    font-size: 1.4rem;
+                    width: 20px;
+                    height: 20px;
+                  }
+                }
+                &__body {
+                  position: absolute;
+                  top: calc(100% + 10px);
+                  // left: 50%;
+                  // transform: translateX(-50%);
+                  right: 0;
+                  width: max-content;
+                  border: 1px solid themed("border");
+                  border-radius: $border-radius-10;
+                  // overflow: hidden;
+                  box-shadow: themed("box-shadow");
+                  padding: 12px 0;
+                  z-index: 99;
+                  background-color: themed("bg2");
+                  display: none;
+                  &.active {
+                    display: block;
+                  }
+                  &::after {
+                    content: "";
+                    display: block;
+                    height: 15px;
+                    position: absolute;
+                    transform: rotateZ(45deg);
+                    width: 15px;
+                    top: -8px;
+                    right: 11px;
+                    background-color: themed("bg2");
+                    border-top: 1px solid themed("border");
+                    border-left: 1px solid themed("border");
+                  }
+                  button {
+                    width: 100%;
+                    @include flex(center, unset);
+                    gap: 8px;
+                    padding: 8px 10px;
+                    min-width: 120px;
+                    color: themed("text1");
+                    &:hover {
+                      background-color: themed("primary");
+                      color: $color-white;
+                    }
+                    i {
+                      --size: 24px;
+                      width: var(--size);
+                      height: var(--size);
+                      font-size: 1.2rem;
+                      @include flex(center, center);
+                    }
+                    span {
+                      font-size: $font-size-s;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          &__important {
+            padding: 20px;
+            width: 100%;
+            background-color: #f1ffed;
+            display: flex;
+            flex-wrap: wrap;
+            &.dark {
+              background-color: #30336b;
+            }
+            &__col {
+              @include mobile {
+                padding: 0;
+                &:nth-child(1) {
+                  border-bottom: 1px solid themed("border");
+                }
+              }
+              .item {
+                padding: 10px;
+                border-bottom: 1px solid themed("border");
+                &:last-child {
+                  border: 0;
+                }
+                .header {
+                  @include flex(start, unset);
+                  gap: 8px;
+                  margin-bottom: 8px;
+                  color: themed("text1");
+                  i {
+                    @include flex(center, center);
+                    font-size: $font-size-s;
+                  }
+                  h4 {
+                    font-size: $font-size-s;
+                  }
+                }
+                .content {
+                  color: themed("text1");
+                  font-size: $font-size-s;
+                }
+                a {
+                  transition: all 0.3s;
+                  &:hover {
+                    text-decoration: underline;
+                  }
+                }
+              }
+            }
+          }
+          &__content {
+            padding: 20px;
+            &__item {
+              margin-top: 20px;
+              &__header {
+                padding: 10px 0;
+                h4 {
+                  font-size: $font-size-m;
+                  font-weight: 600;
+                  color: $color-primary;
+                }
+              }
+              &__body {
+                color: themed("text1");
+                font-size: $font-size-s;
+                p,
+                strong,
+                span {
+                  color: themed("text1") !important;
+                  background-color: transparent !important;
+                }
+                ul {
+                  display: block;
+                  list-style-type: disc;
+                  margin-block-start: 1em;
+                  margin-block-end: 1em;
+                  margin-inline-start: 0px;
+                  margin-inline-end: 0px;
+                  padding-inline-start: 40px;
+                }
+
+                ol {
+                  display: block;
+                  list-style-type: decimal;
+                  margin-block-start: 1em;
+                  margin-block-end: 1em;
+                  margin-inline-start: 0px;
+                  margin-inline-end: 0px;
+                  padding-inline-start: 40px;
+                }
+              }
+            }
+          }
+        }
+        & > div:nth-child(2) {
+          @include flex(start, unset);
+          flex-direction: column;
+          gap: 20px;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+.modal__sure {
+  @include themify($themes) {
+    padding: 0px 20px 0 20px;
+    width: 100%;
+    h2 {
+      font-weight: 400;
+      color: themed("text1");
+      font-size: $font-size-m;
+    }
+    span {
+      font-weight: 400;
+      color: themed("text2");
+      font-size: $font-size-s;
+    }
+    &__footer {
+      width: 100%;
+      margin-top: 20px;
+      @include flex(center, end);
+      gap: 8px;
+      & > .btn-cancel {
+        @include button(themed("text1"), themed("bg1"));
+      }
+      & > .btn-submit {
+        @include button($color-white, $color-primary);
+      }
+    }
+  }
+}

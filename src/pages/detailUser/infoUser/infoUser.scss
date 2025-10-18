@@ -1,0 +1,240 @@
+@use "../../../scss/" as *;
+
+.infoUser {
+  @include themify($themes) {
+    &__header {
+      @include flex(center, space-between);
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid themed("border");
+
+      h3 {
+        font-size: $font-size-l;
+        color: themed("text1");
+        font-weight: 600;
+        margin: 0;
+      }
+
+      &__actions {
+        @include flex(center, unset);
+        gap: 15px;
+
+        .btn-edit-all {
+          @include flex(center, unset);
+          gap: 8px;
+          padding: 12px 24px;
+          background: linear-gradient(135deg, #007bff, #0056b3);
+          color: white;
+          border: none;
+          border-radius: $border-radius-10;
+          font-size: $font-size-s;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+
+          &:hover {
+            background: linear-gradient(135deg, #0056b3, #004085);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+          }
+
+          &:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+          }
+
+          i {
+            font-size: 14px;
+          }
+        }
+
+        .infoUser__action-buttons {
+          display: flex !important;
+          align-items: center !important;
+          gap: 8px !important;
+
+          .btn-save-all {
+            padding: 10px 20px !important;
+            background: #28a745 !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 6px !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            display: inline-block !important;
+            text-decoration: none !important;
+            min-width: 60px !important;
+
+            &:hover:not(:disabled) {
+              background: #218838 !important;
+            }
+
+            &:disabled {
+              opacity: 0.6 !important;
+              cursor: not-allowed !important;
+            }
+          }
+
+          .btn-cancel-all {
+            padding: 10px 20px !important;
+            background: #6c757d !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 6px !important;
+            font-size: 14px !important;
+            font-weight: 500 !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            display: inline-block !important;
+            text-decoration: none !important;
+            min-width: 60px !important;
+
+            &:hover {
+              background: #5a6268 !important;
+            }
+          }
+        }
+      }
+    }
+
+    &__wrapper {
+      .personalInformation__wrapper__item {
+        @include flex(center, space-between);
+        padding: 20px 0;
+        border-bottom: 1px solid themed("border");
+        &__left {
+          max-width: 70%;
+          width: 280px;
+          h6 {
+            font-size: $font-size-s;
+            color: themed("text1");
+            font-weight: 600;
+            margin-bottom: 10px;
+          }
+          span {
+            @include text(1);
+            font-size: $font-size-s;
+            color: themed("text2");
+            font-weight: 400;
+            min-height: 20px;
+            display: block;
+            padding: 8px 0;
+          }
+          input {
+            background-color: themed("bg1");
+            padding: 20px 8px;
+            font-size: $font-size-s;
+            color: themed("text2");
+            border-radius: $border-radius-10;
+            width: 100%;
+            border: 2px solid themed("border");
+            transition: all 0.3s ease;
+
+            &:focus {
+              outline: none;
+              border-color: #007bff;
+              box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+            }
+
+            &:disabled {
+              background-color: themed("bg2");
+              color: themed("text3");
+              cursor: not-allowed;
+              opacity: 0.7;
+            }
+          }
+          .input-radio {
+            @include flex(center, unset);
+            gap: 10px;
+            .input-radio-item {
+              @include flex(center, unset);
+              gap: 10px;
+              input[type="radio"] {
+                --size: 20px;
+                width: var(--size);
+                height: var(--size);
+                cursor: pointer;
+
+                &:disabled {
+                  cursor: not-allowed;
+                  opacity: 0.5;
+                }
+              }
+              label {
+                font-size: $font-size-s;
+                color: themed("text1");
+              }
+            }
+          }
+          .select {
+            width: 100%;
+          }
+        }
+
+        &__right {
+          @include flex(end, unset);
+          flex-direction: column;
+          gap: 10px;
+          max-width: 30%;
+          button {
+            padding: 10px 16px;
+            border-radius: $border-radius-10;
+            color: themed("text1");
+            font-size: $font-size-s;
+            cursor: pointer;
+            @include flex(center, unset);
+            gap: 8px;
+            &.btn-edit {
+              background-color: themed("bg1");
+              @include mobile {
+                background-color: transparent;
+                span {
+                  display: none;
+                }
+              }
+            }
+            &.btn-save {
+              background-color: $color-primary;
+              color: $color-white;
+            }
+            &.btn-cancel {
+              background-color: themed("bg1");
+            }
+          }
+        }
+      }
+    }
+
+    // Responsive design
+    @include mobile {
+      &__header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+
+        &__actions {
+          width: 100%;
+
+          .btn-edit-all {
+            width: 100%;
+            justify-content: center;
+          }
+
+          .infoUser__action-buttons {
+            width: 100%;
+            justify-content: space-between;
+
+            .btn-save-all,
+            .btn-cancel-all {
+              flex: 1;
+              margin: 0 4px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,315 @@
+@use "../../scss/" as *;
+
+.detailUser {
+  @include themify($themes) {
+    margin-top: $height-header;
+    min-height: 100vh;
+    padding: $spacing 0;
+    .container {
+      .detailUser__wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        &__header {
+          background-color: themed("bg2");
+          overflow: hidden;
+          border-radius: $border-radius-20;
+
+          width: 100%;
+          &__bg {
+            width: 100%;
+            height: 260px;
+            border-radius: $border-radius-20;
+            overflow: hidden;
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          }
+          &__main {
+            @include flex(start, space-between);
+            gap: 10px;
+            padding: 20px;
+            @include mobile {
+              align-items: center;
+              flex-direction: column;
+            }
+            &__left {
+              @include flex(start, unset);
+              gap: 10px;
+              @include mobile {
+                align-items: center;
+                flex-direction: column;
+              }
+              &__image {
+                --size: 200px;
+                min-width: var(--size);
+                height: var(--size);
+                width: var(--size);
+                @include flex(center, center);
+                position: relative;
+                margin-top: -100px;
+                @include mobile {
+                }
+                img {
+                  border: 4px solid themed("bg2");
+                  border-radius: 50%;
+                  overflow: hidden;
+                  width: 100%;
+                  height: auto;
+                  object-fit: contain;
+                  cursor: pointer;
+                }
+                &:hover &__edit {
+                  display: flex;
+                }
+                &__edit {
+                  position: absolute;
+                  right: 14px;
+                  bottom: 14px;
+                  background-color: themed("bg1");
+                  @include flex(center, center);
+                  transition: all 0.3s;
+                  cursor: pointer;
+                  --size: 36px;
+                  width: var(--size);
+                  height: var(--size);
+                  border-radius: 50%;
+                  i {
+                    font-size: 1.2rem;
+                    color: themed("text2");
+                  }
+                  input {
+                    display: none;
+                  }
+                }
+              }
+              &__text {
+                @include flex(unset, unset);
+                flex-direction: column;
+                gap: 8px;
+                @include mobile {
+                  align-items: center;
+                  text-align: center;
+                }
+                & > .tag {
+                  font-size: $font-size-s;
+                  color: themed("text2");
+                }
+                & > .name {
+                  @include hideText(300px);
+                  font-size: $font-size-l;
+                  color: themed("text1");
+                  font-weight: 500;
+                }
+                & > .date {
+                  @include flex(center, unset);
+                  gap: 8px;
+                  i {
+                    color: themed("text2");
+                    font-size: $font-size-s;
+                  }
+                  span {
+                    font-size: $font-size-s;
+                    color: themed("text2");
+                    font-weight: 400;
+                  }
+                }
+              }
+            }
+            &__actions {
+              @include flex(center, unset);
+              gap: 12px;
+              @include mobile {
+                flex-direction: column;
+                gap: 8px;
+              }
+            }
+            
+            &__button {
+              @include flex(center, unset);
+              flex-direction: column;
+              gap: 10px;
+              span {
+                font-size: $font-size-s;
+                color: themed("text1");
+                font-weight: 500;
+              }
+              button {
+                @include button($color-white, $color-primary);
+              }
+            }
+          }
+        }
+        &__body {
+          @include flex(unset, unset);
+          flex-wrap: wrap-reverse;
+
+          &__left {
+            background-color: themed("bg2");
+            padding: 20px;
+            border-radius: $border-radius-20;
+            &__control {
+              @include flex(center, unset);
+              gap: 10px;
+              height: 100%;
+              flex-wrap: wrap;
+              @include mobile {
+                display: none;
+              }
+              a {
+                height: 100%;
+                padding: 10px 20px;
+                // background-color: themed("bg1");
+                border-radius: $border-radius-10;
+                font-size: $font-size-s;
+                color: themed("text1");
+                cursor: pointer;
+                border: 1px solid transparent;
+                span {
+                  @include text(3);
+                }
+                &.active {
+                  background-color: themed("bg1");
+                  border: 1px solid themed("border");
+                }
+              }
+            }
+
+            &__control-mobile {
+              @include flex(center, unset);
+              gap: 6px;
+              height: 100%;
+              display: none;
+              @include mobile {
+                display: flex;
+              }
+              a {
+                height: 100%;
+                padding: 16px;
+                border-radius: $border-radius-10;
+                border: 1px solid transparent;
+                font-size: $font-size-s;
+                color: themed("text1");
+                cursor: pointer;
+                @include flex(center, unset);
+                gap: 8px;
+                span {
+                  @include text(3);
+                }
+                &.active {
+                  background-color: themed("bg1");
+                  border: 1px solid themed("border");
+                }
+                &:hover {
+                  background-color: themed("bg1");
+                  border: 1px solid themed("border");
+                }
+              }
+
+              .button__more {
+                position: relative;
+                &__toggle {
+                  height: 100%;
+                  padding: 16px;
+                  border-radius: $border-radius-10;
+                  border: 1px solid transparent;
+                  font-size: $font-size-s;
+                  color: themed("text1");
+                  cursor: pointer;
+                  @include flex(center, unset);
+                  gap: 8px;
+                  &.active {
+                    background-color: themed("bg1");
+                  }
+                  &:hover {
+                    background-color: themed("bg1");
+                  }
+                }
+                &__dropdown {
+                  position: absolute;
+                  width: max-content;
+                  right: 0;
+                  top: 100%;
+                  @include flex(center, unset);
+                  flex-direction: column;
+                  background-color: themed("bg2");
+                  box-shadow: themed("box-shadow");
+                  border-radius: $border-radius-10;
+                  z-index: 99;
+                  padding: 8px;
+                  gap: 8px;
+                  button,
+                  a {
+                    width: 100%;
+                  }
+                }
+              }
+            }
+
+            &__content {
+              padding: 20px 0;
+              .companiesSave {
+                flex-wrap: wrap;
+                width: 100%;
+              }
+              .jobsSave {
+                flex-wrap: wrap;
+              }
+            }
+          }
+          & > div:nth-child(2) {
+            display: flex;
+            gap: 20px;
+            flex-direction: column;
+            .recomKeyword {
+              @include mobile {
+                display: none;
+              }
+            }
+          }
+          &__right {
+            background-color: themed("bg2");
+            min-height: 100px;
+            border-radius: $border-radius-10;
+            padding: 20px;
+            overflow: hidden;
+            @include flex(unset, unset);
+            gap: 10px;
+            flex-direction: column;
+            h4 {
+              font-size: $font-size-m;
+              color: themed("text1");
+            }
+            & > .facebook{
+              a{
+                @include text(1);
+              }
+            }
+            & > div {
+              @include flex(center, unset);
+              gap: 8px;
+              color: themed("text2");
+              i {
+                --size: 20px;
+                width: var(--size);
+                height: var(--size);
+                @include flex(center, center);
+                font-size: 1.1rem;
+              }
+              a {
+                @include text(1);
+                font-size: $font-size-s;
+                color: $color-txt-blue;
+                &:hover {
+                  text-decoration: underline;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

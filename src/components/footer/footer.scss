@@ -1,0 +1,200 @@
+@use "../../scss/" as *;
+
+.footer {
+  @include themify($themes) {
+    padding: $spacing 0;
+    border-top: 1px solid themed("border");
+    margin-top: $spacing;
+    background-color: themed("bg2");
+    .container {
+      .footer__list {
+        flex-wrap: wrap;
+        @include mobile {
+          flex-direction: column;
+        }
+        .footer__list__col {
+          @include flex(unset, unset);
+          flex-direction: column;
+          gap: 20px;
+          h4 {
+            font-size: $font-size-m;
+            color: themed("text1");
+            font-weight: 500;
+            line-height: 1;
+          }
+
+          @include mobile {
+            justify-content: center;
+            align-items: center;
+          }
+
+          &.pc-6 {
+          }
+
+          &.t-12 {
+            @include tablet {
+              @include flex(center, start);
+              gap: 40px;
+              flex-direction: row;
+              width: 100%;
+            }
+            @include mobile {
+              flex-direction: column;
+            }
+          }
+
+          &__social {
+            @include flex(start, unset);
+            gap: 20px;
+            flex-direction: column;
+            @include tablet {
+              flex: 1;
+            }
+            @include mobile {
+              align-items: center;
+            }
+            &__logo {
+              @include flex(center, unset);
+              gap: 8px;
+              img {
+                --size: 40px;
+                width: var(--size);
+                height: var(--size);
+              }
+              h2 {
+                font-size: $font-size-l;
+                font-weight: 600;
+                color: themed("text1");
+              }
+            }
+            &__list {
+              @include flex(start, unset);
+              flex-direction: column;
+              gap: 20px;
+              @include mobile {
+                align-items: center;
+              }
+              ul {
+                @include flex(center, unset);
+                gap: 8px;
+                list-style: none;
+                li a {
+                  --size: 50px;
+                  width: var(--size);
+                  height: var(--size);
+                  padding: 10px;
+                  @include flex(center, center);
+                  background-color: themed("bg1");
+                  border-radius: $border-radius-10;
+                  cursor: pointer;
+                  transition: all 0.3s;
+                  border: 1.2px solid transparent;
+                  &:hover {
+                    border: 1.2px solid themed("border");
+                    box-shadow: themed("box-shadow");
+                  }
+                  i {
+                    @include flex(center, center);
+                    font-size: 1.2rem;
+                    color: themed("text1");
+                  }
+                }
+              }
+            }
+          }
+
+          &__form {
+            @include flex(start, unset);
+            flex-direction: column;
+            gap: 20px;
+            @include tablet {
+              flex: 1;
+            }
+            @include mobile {
+              align-items: center;
+              width: 100%;
+            }
+            span {
+              color: themed("text2");
+              font-weight: 400;
+              font-size: $font-size-s;
+              max-width: 400px;
+            }
+            &__input {
+              @include flex(center, unset);
+              background-color: themed("bg1");
+              width: max-content;
+              border-radius: $border-radius-10;
+              width: 400px;
+              padding: 0 12px;
+              @include mobile {
+                width: 100%;
+              }
+              i {
+                font-size: $font-size-m;
+                color: themed("text1");
+              }
+              input {
+                width: 100%;
+                padding: 20px 8px;
+                font-size: $font-size-s;
+                color: themed("text1");
+                background-color: transparent;
+              }
+              button {
+                padding: 10px;
+                border-radius: $border-radius-10;
+                background-color: $color-primary;
+                cursor: pointer;
+                border: 1px solid $color-primary;
+                transition: all 0.3s;
+                &:hover {
+                  background-color: transparent;
+                  svg {
+                    fill: $color-primary;
+                  }
+                }
+                svg {
+                  @include flex(center, center);
+                  fill: $color-white;
+                  --size: 20px;
+                  width: var(--size);
+                  height: var(--size);
+                }
+              }
+            }
+          }
+
+          &__list {
+            @include flex(unset, unset);
+            flex-direction: column;
+            gap: 8px;
+            list-style: none;
+            @include mobile {
+              text-align: center;
+            }
+            li {
+              a {
+                font-size: $font-size-s;
+                color: themed("text2");
+                font-weight: 400;
+                line-height: 1;
+                transition: all 0.3s;
+                &:hover {
+                  font-weight: 500;
+                }
+              }
+            }
+          }
+        }
+      }
+      .footer__bottom {
+        font-size: $font-size-s;
+        color: themed("text2");
+        width: 100%;
+        @include flex(center, center);
+        padding: 20px;
+      }
+    }
+  }
+}
