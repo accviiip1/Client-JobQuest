@@ -52,7 +52,7 @@ const hedearItem = [
   {
     display: "Tạo CV",
     icon: <i className="fa-solid fa-file-pen"></i>,
-    path: "http://localhost:3002",
+    path: process.env.REACT_APP_CV_URL || "http://localhost:3002",
     external: true,
   },
 ];
