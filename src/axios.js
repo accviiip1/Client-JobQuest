@@ -7,6 +7,6 @@ export const apiImage = `${baseURL}/images/`;
 export const apiCv = `${baseURL}/cv/`;
 
 export const makeRequest = axios.create({
-  baseURL: baseURL.endsWith('/api') ? baseURL : `${baseURL}/api`,
+  baseURL: `${baseURL}/api`,
   withCredentials: true,
 });
