@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { makeRequest } from "../../axios";
+import Loading from "../loading/Loading";
 import "./SectionPopularPosts.scss";
 
 export default function SectionPopularPosts() {
@@ -57,7 +58,11 @@ export default function SectionPopularPosts() {
               <i className="fa-solid fa-fire"></i> Bài viết nhiều lượt xem nhất
             </h2>
           </div>
-          <div className="loading">Đang tải...</div>
+          <Loading 
+            text="Đang tải bài viết..." 
+            size="large"
+            className="popular-posts-loading"
+          />
         </div>
       </div>
     );

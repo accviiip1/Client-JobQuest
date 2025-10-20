@@ -34,6 +34,7 @@ export default function PostJob() {
   const [typeWork, setTypeWork] = useState("");
   const [education, setEducation] = useState("");
   const [experience, setExperience] = useState("");
+  const [deadline, setDeadline] = useState("");
   const navigate = useNavigate();
 
   const [inputs, setInputs] = useState({
@@ -49,6 +50,7 @@ export default function PostJob() {
     education: "",
     sex: "",
     experience: "",
+    deadline: "",
   });
 
   const handleChange = (e) => {
@@ -76,6 +78,7 @@ export default function PostJob() {
       inputs.typeWork = typeWork;
       inputs.education = education;
       inputs.experience = experience;
+      inputs.deadline = deadline;
       if (salaryDiscuss === true) {
         inputs.salaryMin = 0;
         inputs.salaryMax = 0;
@@ -359,6 +362,19 @@ export default function PostJob() {
               <h2 className="postJob__wrapper__body__form__title">Yêu cầu công việc</h2>
               <div className="postJob__wrapper__body__form__content">
                 <ReactQuill theme="snow" value={request} onChange={setRequest} />
+              </div>
+            </div>
+            {/* deadline */}
+            <div className="postJob__wrapper__body__form">
+              <h2 className="postJob__wrapper__body__form__title">Hạn nộp hồ sơ</h2>
+              <div className="postJob__wrapper__body__form__content">
+                <input
+                  type="datetime-local"
+                  value={deadline}
+                  onChange={(e) => setDeadline(e.target.value)}
+                  className="postJob__wrapper__body__form__content__input"
+                  placeholder="Chọn hạn nộp hồ sơ"
+                />
               </div>
             </div>
             {/* khác */}

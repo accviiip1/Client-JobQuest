@@ -362,6 +362,20 @@ export default function DetailJob() {
                         </div>
                         <div className="item">
                           <div className="header">
+                            <i className="fa-regular fa-calendar"></i>
+                            <h4>Hạn nộp</h4>
+                          </div>
+                          <span className="content">{job?.deadline ? new Date(job.deadline).toLocaleDateString('vi-VN') : 'Không có'}</span>
+                        </div>
+                        <div className="item">
+                          <div className="header">
+                            <i className="fa-regular fa-hourglass-half"></i>
+                            <h4>Thời gian còn lại</h4>
+                          </div>
+                          <span className="content">{job?.deadline ? (() => { const now = new Date(); const deadline = new Date(job.deadline); const diffTime = deadline - now; const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); return diffDays < 0 ? 'Đã hết hạn' : `${diffDays} ngày`; })() : 'Không có'}</span>
+                        </div>
+                        <div className="item">
+                          <div className="header">
                             <i class="fa-solid fa-chart-gantt"></i>
                             <h4>Hình thức</h4>
                           </div>
@@ -374,6 +388,22 @@ export default function DetailJob() {
                           </div>
                           <span className="content">{job?.education || "Không yêu cầu"}</span>
                         </div>
+                        <div className="item">
+                          <div className="header">
+                            <i className="fa-regular fa-clock"></i>
+                            <h4>Tạo lúc</h4>
+                          </div>
+                          <span className="content">{job?.createdAt ? new Date(job.createdAt).toLocaleString('vi-VN') : '...'}</span>
+                        </div>
+                        {job?.deletedAt && (
+                          <div className="item">
+                            <div className="header">
+                              <i className="fa-regular fa-circle-xmark"></i>
+                              <h4>Đã ẩn</h4>
+                            </div>
+                            <span className="content">{new Date(job.deletedAt).toLocaleString('vi-VN')}</span>
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="detailJob__wrapper__main__content">

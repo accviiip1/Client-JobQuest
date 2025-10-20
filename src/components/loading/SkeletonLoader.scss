@@ -1,0 +1,149 @@
+.skeleton-loader {
+  width: 100%;
+  
+  .skeleton-line,
+  .skeleton-image,
+  .skeleton-cell,
+  .skeleton-circle,
+  .skeleton-custom {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    
+    &.animated {
+      animation: shimmer 1.5s ease-in-out infinite;
+    }
+  }
+}
+
+.skeleton-text {
+  .skeleton-line {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.skeleton-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+  .skeleton-image {
+    width: 100%;
+    height: 200px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+  
+  .skeleton-content {
+    .skeleton-line {
+      margin-bottom: 12px;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.skeleton-table {
+  .skeleton-row {
+    display: flex;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    .skeleton-cell {
+      height: 16px;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.skeleton-circle {
+  border-radius: 50%;
+}
+
+// Animations
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+// Dark mode support
+[data-theme="dark"] {
+  .skeleton-loader {
+    .skeleton-line,
+    .skeleton-image,
+    .skeleton-cell,
+    .skeleton-circle,
+    .skeleton-custom {
+      background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+      background-size: 200% 100%;
+    }
+  }
+  
+  .skeleton-card {
+    background: #1f2937;
+    border-color: #374151;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  .skeleton-table {
+    .skeleton-row {
+      border-bottom-color: #374151;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .skeleton-card {
+    padding: 12px;
+    
+    .skeleton-image {
+      height: 150px;
+    }
+  }
+  
+  .skeleton-table {
+    .skeleton-row {
+      gap: 8px;
+      padding: 8px 0;
+    }
+  }
+}
+
+// High performance animations
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-line,
+  .skeleton-image,
+  .skeleton-cell,
+  .skeleton-circle,
+  .skeleton-custom {
+    animation: none;
+    background: #f0f0f0;
+  }
+  
+  [data-theme="dark"] & {
+    .skeleton-line,
+    .skeleton-image,
+    .skeleton-cell,
+    .skeleton-circle,
+    .skeleton-custom {
+      background: #374151;
+    }
+  }
+}

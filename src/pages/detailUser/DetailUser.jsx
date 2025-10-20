@@ -261,8 +261,8 @@ export default function DetailUser() {
                       </div>
                       <div className="province">
                         <i className="fa-solid fa-location-dot"></i>
-                        {user?.province ? (
-                          <span href="">{user?.province}</span>
+                        {user?.location && user?.location !== 'Chưa cập nhật' ? (
+                          <span>{user?.location}</span>
                         ) : (
                           <span>Không có</span>
                         )}

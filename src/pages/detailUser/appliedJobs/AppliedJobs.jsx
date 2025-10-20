@@ -140,12 +140,29 @@ function AppliedItem({ job, i }) {
                 <i className="fa-solid fa-location-dot"></i>
                 <span>{job?.province}</span>
               </div>
+                {job?.deadline && (
+                  <div className="deadline">
+                    <i className="fa-regular fa-calendar"></i>
+                    <span>Hạn: {new Date(job.deadline).toLocaleDateString('vi-VN')}</span>
+                  </div>
+                )}
+                {job?.deadline && (
+                  <div className="daysLeft">
+                    <i className="fa-regular fa-hourglass-half"></i>
+                    {(() => { const now = new Date(); const deadline = new Date(job.deadline); const diffTime = deadline - now; const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); return (<span>{diffDays < 0 ? 'Đã hết hạn' : `${diffDays} ngày còn lại`}</span>); })()}
+                  </div>
+                )}
             </div>
           </div>
           <div className="appliedJobs__wrapper__item__left__bottom">
             <div className="createdAt">
               <span>Ứng tuyển {moment(job?.createdAt).fromNow()}</span>
             </div>
+              {job?.deletedAt && (
+                <div className="deletedAt">
+                  <span>Đã ẩn: {new Date(job.deletedAt).toLocaleString('vi-VN')}</span>
+                </div>
+              )}
           </div>
         </div>
       </div>

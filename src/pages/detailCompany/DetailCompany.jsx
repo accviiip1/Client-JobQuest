@@ -455,8 +455,8 @@ export default function DetailCompany() {
                     <h6>Địa chỉ</h6>
                     <div className="province">
                       <i className="fa-solid fa-location-dot"></i>
-                      {company?.province ? (
-                        <span href="">{company?.province}</span>
+                      {company?.location && company?.location !== 'Chưa cập nhật' ? (
+                        <span>{company?.location}</span>
                       ) : (
                         <span>Không có</span>
                       )}

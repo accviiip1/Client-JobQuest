@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { makeRequest } from '../../axios';
+import Loading from '../../components/loading/Loading';
 import './PostDetail.scss';
 
 export default function PostDetail() {
@@ -42,7 +43,7 @@ export default function PostDetail() {
     return (
       <div className="postDetail">
         <div className="container">
-          <div className="loading">Đang tải...</div>
+          <Loading text="Đang tải bài viết..." />
         </div>
       </div>
     );

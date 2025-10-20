@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { makeRequest } from "../../axios";
 import { Link } from "react-router-dom";
+import Loading from "../../components/loading/Loading";
 import "./careerGuide.scss";
 
 export default function CareerGuide() {
@@ -62,7 +63,13 @@ export default function CareerGuide() {
     return (
       <div className="careerGuide">
         <div className="container">
-          <div className="loading">Đang tải...</div>
+          <Loading 
+            text="Đang tải hướng dẫn nghề nghiệp..." 
+            size="large"
+            showProgress={true}
+            progress={75}
+            className="career-guide-loading"
+          />
         </div>
       </div>
     );

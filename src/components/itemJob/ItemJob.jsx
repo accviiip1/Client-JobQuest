@@ -218,10 +218,37 @@ export default function ItemJob({ className, job, onClick }) {
                 <i className="fa-solid fa-location-dot"></i>
                 <span>{job?.province}</span>
               </div>
+              {job?.deadline && (
+                <div className="deadline">
+                  <i className="fa-regular fa-calendar"></i>
+                  <span>Hạn: {moment(job.deadline).format("DD/MM/YYYY")}</span>
+                </div>
+              )}
+              {job?.deadline && (
+                <div className="daysLeft">
+                  <i className="fa-regular fa-hourglass-half"></i>
+                  {(() => {
+                    const now = new Date();
+                    const deadline = new Date(job.deadline);
+                    const diffTime = deadline - now;
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    return (
+                      <span>
+                        {diffDays < 0 ? "Đã hết hạn" : `${diffDays} ngày còn lại`}
+                      </span>
+                    );
+                  })()}
+                </div>
+              )}
             </div>
           </div>
           <div className="itemJob__wrapper__bottom">
             <span className="createdAt">{moment(job?.createdAt).fromNow()}</span>
+            {job?.deletedAt && (
+              <span className="deletedAt" title={String(job.deletedAt)}>
+                Đã xóa: {moment(job.deletedAt).fromNow()}
+              </span>
+            )}
             <div className="itemJob__wrapper__bottom__button">
               {job.deletedAt && job?.deletedAt !== null ? (
                 <div className="job__hide">

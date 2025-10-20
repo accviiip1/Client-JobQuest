@@ -3,6 +3,7 @@ import { useAuth } from "../../context/authContext";
 import { useSocket } from "../../context/socketContext.js";
 import { makeRequest } from "../../axios.js";
 import { Link, useNavigate } from "react-router-dom";
+import Loading from "../../components/loading/Loading";
 import "./notification.scss";
 
 export default function NotificationList() {
@@ -347,7 +348,7 @@ export default function NotificationList() {
               </div>
             </div>
             <div className="notification-page__body">
-              <div className="loading">Đang tải...</div>
+              <Loading text="Đang tải thông báo..." />
             </div>
           </div>
         </div>
