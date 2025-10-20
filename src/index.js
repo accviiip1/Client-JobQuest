@@ -7,6 +7,15 @@ import { SocketProvider } from "./context/socketContext";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 
+// Silence console in production to avoid performance noise and leaking logs
+if (process.env.NODE_ENV === 'production') {
+  const noop = () => {};
+  // Preserve error and warn if you want; or no-op all
+  console.log = noop;
+  console.debug = noop;
+  console.info = noop;
+}
+
 Document.title = "Việc làm & Tuyển dụng SDU-JobQuest";
 
 const queryClient = new QueryClient();

@@ -148,12 +148,7 @@ export default function Signin() {
           Bạn chưa có tài khoản ?<Link to={"/dang-ky/nguoi-dung"}> Đăng ký</Link>
         </span>
 
-        <div className="admin-link">
-          <a href="http://localhost:3001" target="_blank" rel="noopener noreferrer" className="admin-btn">
-            <i className="fa-solid fa-user-shield"></i>
-            Đăng nhập Admin
-          </a>
-        </div>
+        
       </div>
     </div>
   );
